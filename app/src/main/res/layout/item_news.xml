@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/source"
-        android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageIV" />
 
@@ -32,7 +31,6 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="@string/title"
-        android:textColor="@android:color/black"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
@@ -48,7 +46,6 @@
         android:ellipsize="end"
         android:maxLines="5"
         android:text="@string/description"
-        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageIV"
         app:layout_constraintTop_toBottomOf="@+id/titleTV" />
@@ -59,7 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/published"
-        android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sourceTV" />
 </androidx.constraintlayout.widget.ConstraintLayout>
