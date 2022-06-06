@@ -6,10 +6,12 @@
         <entry key="..\:/Users/Owies/AndroidStudioProjects/Task1/app/src/main/res/layout/activity_main.xml" value="0.17239583333333333" />
         <entry key="..\:/Users/Owies/AndroidStudioProjects/Task1/app/src/main/res/layout/fragment_news.xml" value="0.18645833333333334" />
         <entry key="..\:/Users/Owies/AndroidStudioProjects/Task1/app/src/main/res/layout/item_news.xml" value="0.18645833333333334" />
+        <entry key="..\:/myProjects/Task1/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/myProjects/Task1/app/src/main/res/layout/item_news.xml" value="0.23958333333333334" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="18" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

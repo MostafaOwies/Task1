@@ -9,7 +9,7 @@ import android.widget.AbsListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task1.MainActivity
-import com.example.task1.adapters.NewsAdapter
+import com.example.task1.adapters.BaseAdapter
 import com.example.task1.databinding.FragmentNewsBinding
 import com.example.task1.ui.NewsViewModel
 import com.example.task1.utils.Constants.QUERY_PAGE_SIZE
@@ -24,7 +24,7 @@ class NewsFragment : Fragment() {
     private var _binding:FragmentNewsBinding?=null
     private val binding get()=_binding
     lateinit var viewModel: NewsViewModel
-    lateinit var newsAdapter: NewsAdapter
+    lateinit var baseAdapter: BaseAdapter
     private val coroutineScope = CoroutineScope(Dispatchers.Main.immediate)
 
     override fun onCreateView(
@@ -46,7 +46,7 @@ class NewsFragment : Fragment() {
                     is Resource.Success -> {
                         hideProgressBar()
                         response.data?.let {
-                            newsAdapter.difference.submitList(it.articles.toList())
+                            baseAdapter.difference.submitList(it.articles.toList())
                             val totalPages = it.totalResults / QUERY_PAGE_SIZE + 2
                             isLastPage = viewModel.newsPage == totalPages
                             if (isLastPage) {
@@ -112,8 +112,8 @@ class NewsFragment : Fragment() {
     }
 
     private fun setUpRecyclerView(){
-        newsAdapter= NewsAdapter(this)
-        binding?.rvNews?.adapter=newsAdapter
+        baseAdapter= BaseAdapter(this)
+        binding?.rvNews?.adapter=baseAdapter
         binding?.rvNews?.layoutManager=LinearLayoutManager(activity)
         binding?.rvNews?.addOnScrollListener(this@NewsFragment.myScrollListener)
     }
