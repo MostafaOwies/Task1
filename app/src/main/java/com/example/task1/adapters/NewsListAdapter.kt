@@ -35,14 +35,18 @@ class NewsListAdapter(private val context: NewsFragment):BaseAdapter<Article>() 
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
            return oldItem.url==newItem.url
         }
-
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem==newItem
         }
     }
     private val difference= AsyncListDiffer(this,differenceCallBack)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<Article> {
+    override fun setViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<Article> {
         return NewsViewHolder(ItemNewsBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
+
+    override fun setItem(items: MutableList<Article>) {
+        TODO("Not yet implemented")
+    }
+
 }

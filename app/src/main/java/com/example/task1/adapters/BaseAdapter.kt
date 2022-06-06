@@ -10,16 +10,16 @@ import androidx.viewbinding.ViewBinding
 import com.example.task1.newslist.Article
 
 
-open class BaseAdapter<T>:RecyclerView.Adapter<BaseAdapter.GenericViewHolder<T>>() {
-   open class GenericViewHolder<T>( itemView :View):RecyclerView.ViewHolder(itemView),BindViewHolder<T>{
-       override fun onBind(item:T){}
+abstract class BaseAdapter<T>:RecyclerView.Adapter<BaseAdapter.GenericViewHolder<T>>() {
+   abstract class GenericViewHolder<T>( itemView :View):RecyclerView.ViewHolder(itemView),BindViewHolder<T>{
+       abstract override fun onBind(item:T)
    }
 
+    abstract fun setItem(items:MutableList<T>)
 
+    abstract fun setViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> {
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(viewType,parent,false)
-        return GenericViewHolder(view)
+        return setViewHolder(parent,viewType)
     }
 
     override fun onBindViewHolder(holder: GenericViewHolder<T>, position: Int) {
