@@ -1,8 +1,6 @@
 package com.example.task1.adapters
 
-import android.content.ClipData
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -39,14 +37,14 @@ class NewsListAdapter(private val context: NewsFragment):BaseAdapter<Article>() 
             return oldItem==newItem
         }
     }
-    private val difference= AsyncListDiffer(this,differenceCallBack)
+    val difference= AsyncListDiffer(this,differenceCallBack)
 
     override fun setViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<Article> {
         return NewsViewHolder(ItemNewsBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
-    override fun setItem(items: MutableList<Article>) {
-        TODO("Not yet implemented")
+    override fun setItem(): MutableList<Article> {
+       return difference.currentList
     }
 
 }

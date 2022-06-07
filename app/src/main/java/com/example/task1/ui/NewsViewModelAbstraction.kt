@@ -6,5 +6,5 @@ import retrofit2.Response
 
 interface NewsViewModelAbstraction {
     suspend fun getNews(countryCode:String)
-     fun handleNewsResponse(response: Response<News>): Resource<News>
+     suspend fun handleNewsResponse(response: Response<News>): Resource<News>
 }

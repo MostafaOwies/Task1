@@ -9,7 +9,7 @@ import android.widget.AbsListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task1.MainActivity
-import com.example.task1.adapters.BaseAdapter
+import com.example.task1.adapters.NewsListAdapter
 import com.example.task1.databinding.FragmentNewsBinding
 import com.example.task1.ui.NewsViewModel
 import com.example.task1.utils.Constants.QUERY_PAGE_SIZE
@@ -24,7 +24,7 @@ class NewsFragment : Fragment() {
     private var _binding:FragmentNewsBinding?=null
     private val binding get()=_binding
     lateinit var viewModel: NewsViewModel
-    lateinit var baseAdapter: BaseAdapter
+    lateinit var baseAdapter: NewsListAdapter
     private val coroutineScope = CoroutineScope(Dispatchers.Main.immediate)
 
     override fun onCreateView(
@@ -41,27 +41,31 @@ class NewsFragment : Fragment() {
 
 
         coroutineScope.launch {
-            viewModel.news.collect { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideProgressBar()
-                        response.data?.let {
-                            baseAdapter.difference.submitList(it.articles.toList())
-                            val totalPages = it.totalResults / QUERY_PAGE_SIZE + 2
-                            isLastPage = viewModel.newsPage == totalPages
-                            if (isLastPage) {
-                                binding?.rvNews?.setPadding(0, 0, 0, 0)
+            try {
+                viewModel.news.collect { response ->
+                    when (response) {
+                        is Resource.Success -> {
+                            hideProgressBar()
+                            response.data?.let {
+                                baseAdapter.difference.submitList(it.articles.toList())
+                                val totalPages = it.totalResults / QUERY_PAGE_SIZE + 2
+                                isLastPage = viewModel.newsPage == totalPages
+                                if (isLastPage) {
+                                    binding?.rvNews?.setPadding(0, 0, 0, 0)
+                                }
                             }
                         }
+                        is Resource.Error -> {
+                            hideProgressBar()
+                        }
+                        is Resource.Loading -> {
+                            showProgressBar()
+                        }
+                        else -> {}
                     }
-                    is Resource.Error -> {
-                        hideProgressBar()
-                    }
-                    is Resource.Loading -> {
-                        showProgressBar()
-                    }
-                    else -> { }
                 }
+            }finally {
+                hideProgressBar()
             }
         }
     }
@@ -112,7 +116,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun setUpRecyclerView(){
-        baseAdapter= BaseAdapter(this)
+        baseAdapter= NewsListAdapter(this)
         binding?.rvNews?.adapter=baseAdapter
         binding?.rvNews?.layoutManager=LinearLayoutManager(activity)
         binding?.rvNews?.addOnScrollListener(this@NewsFragment.myScrollListener)
