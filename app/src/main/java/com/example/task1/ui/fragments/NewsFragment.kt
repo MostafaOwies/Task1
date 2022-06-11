@@ -1,7 +1,6 @@
 package com.example.task1.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,21 +10,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.task1.MainActivity
 import com.example.task1.adapters.NewsListAdapter
 import com.example.task1.databinding.FragmentNewsBinding
+import com.example.task1.newslist.NewsListUseCase
 import com.example.task1.ui.NewsViewModel
+import com.example.task1.ui.base.BaseFragment
 import com.example.task1.utils.Constants.QUERY_PAGE_SIZE
 import com.example.task1.utils.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsFragment : Fragment() {
+class NewsFragment : BaseFragment() {
 
     private var _binding:FragmentNewsBinding?=null
     private val binding get()=_binding
     lateinit var viewModel: NewsViewModel
     lateinit var baseAdapter: NewsListAdapter
     private val coroutineScope = CoroutineScope(Dispatchers.Main.immediate)
+    @Inject  lateinit var newsListUseCase :NewsListUseCase
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        injector.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -49,7 +57,7 @@ class NewsFragment : Fragment() {
                             response.data?.let {
                                 baseAdapter.difference.submitList(it.articles.toList())
                                 val totalPages = it.totalResults / QUERY_PAGE_SIZE + 2
-                                isLastPage = viewModel.newsPage == totalPages
+                                isLastPage = newsListUseCase.newsPage == totalPages
                                 if (isLastPage) {
                                     binding?.rvNews?.setPadding(0, 0, 0, 0)
                                 }

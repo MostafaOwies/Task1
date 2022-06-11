@@ -6,10 +6,10 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
-class NewsRepo @Inject constructor() :NewsRepoAbstraction {
+class NewsRepo @Inject constructor(private val newsAPI: NewsAPI) :NewsRepoAbstraction {
 
     override suspend fun getNews(countryCode:String, pageNumber:Int): Response<News> = withContext(Dispatchers.Default){
-        RetrofitInstance.newsAPI.getNews(countryCode,pageNumber)
+        newsAPI.getNews(countryCode,pageNumber)
     }
 
 }

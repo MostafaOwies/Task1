@@ -1,13 +1,11 @@
 package com.example.task1
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.example.task1.networking.NewsRepo
 import com.example.task1.ui.NewsViewModel
 import com.example.task1.ui.NewsViewModelProviderFactory
 import com.example.task1.ui.fragments.NewsFragment
-import com.example.task1.utils.BaseActivity
+import com.example.task1.ui.base.BaseActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
