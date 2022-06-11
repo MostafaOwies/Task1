@@ -4,17 +4,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.task1.networking.NewsRepoAbstraction
 import com.example.task1.newslist.News
+import com.example.task1.newslist.NewsListUseCase
 import com.example.task1.utils.Resource
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import javax.inject.Inject
 
-class NewsViewModel(val newsRepo: NewsRepoAbstraction):ViewModel(),NewsViewModelAbstraction {
+class NewsViewModel @Inject constructor(
+    val newsRepo: NewsRepoAbstraction,
+    private val newsListUseCase: NewsListUseCase
+    ):ViewModel(),NewsViewModelAbstraction {
 
-    val news :MutableStateFlow<Resource<News>> = MutableStateFlow(Resource.Empty())
+    private val _news= MutableStateFlow<Resource<News>>(Resource.Empty())
+    val news :StateFlow<Resource<News>> = _news
     var newsPage =1
     private var newsResponse:News?=null
 
@@ -24,14 +31,14 @@ class NewsViewModel(val newsRepo: NewsRepoAbstraction):ViewModel(),NewsViewModel
 
     override suspend fun getNews(countryCode:String) = withContext(Dispatchers.Default) {
         try {
-            news.value = Resource.Loading()
-            val response = newsRepo.getNews(countryCode, newsPage)
-            news.value = handleNewsResponse(response)
+            _news.value = Resource.Loading()
+            _news.value = newsListUseCase.handleNewsResponse(newsRepo.getNews(countryCode, newsPage))
         }catch (t :Throwable ){
             throw t
         }
     }
 
+    /*
      override suspend fun handleNewsResponse(response: Response<News>):Resource<News> {
          return withContext(Dispatchers.Default) {
              try {
@@ -59,4 +66,5 @@ class NewsViewModel(val newsRepo: NewsRepoAbstraction):ViewModel(),NewsViewModel
              }
          }
      }
+    */
 }
