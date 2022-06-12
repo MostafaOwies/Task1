@@ -2,10 +2,11 @@ package com.example.task1.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.task1.networking.NewsRepoAbstraction
+import com.example.task1.networking.NewsRepo
 import com.example.task1.newslist.News
 import com.example.task1.newslist.NewsListUseCase
 import com.example.task1.utils.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,8 +14,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@HiltViewModel
 class NewsViewModel @Inject constructor(
-    private val newsRepo: NewsRepoAbstraction,
+    private val newsRepo: NewsRepo,
     private val newsListUseCase: NewsListUseCase
     ):ViewModel(),NewsViewModelAbstraction {
 

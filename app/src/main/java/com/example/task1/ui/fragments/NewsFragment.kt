@@ -15,12 +15,14 @@ import com.example.task1.ui.NewsViewModel
 import com.example.task1.ui.base.BaseFragment
 import com.example.task1.utils.Constants.QUERY_PAGE_SIZE
 import com.example.task1.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsFragment : BaseFragment() {
 
     private var _binding:FragmentNewsBinding?=null
@@ -30,10 +32,7 @@ class NewsFragment : BaseFragment() {
     private val coroutineScope = CoroutineScope(Dispatchers.Main.immediate)
     @Inject  lateinit var newsListUseCase :NewsListUseCase
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        injector.inject(this)
-        super.onCreate(savedInstanceState)
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
